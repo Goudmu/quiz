@@ -1,10 +1,16 @@
-import QuizComp from "@/components/MyComponent/QuizComp";
+import QuizSelector from "@/components/MyComponent/QuizSelector";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function SinonimPage() {
   return (
-    <main className="container mx-auto py-12 px-4">
-      <h1 className="text-3xl font-bold text-center mb-8">Sinonim Tes</h1>
-      <QuizComp jumlahSoal={5} />
+    <main>
+      <div>
+        <QuizSelector />
+        <Link href={"/"} className="absolute top-4 left-4">
+          <Button className="cursor-pointer">Back To Menu</Button>
+        </Link>
+      </div>
     </main>
   );
 }

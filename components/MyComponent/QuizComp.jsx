@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label";
 import { ChevronLeft, ChevronRight, CheckCircle } from "lucide-react";
 import { SoalSinonim } from "@/lib/Soal/Sinonim/SoalSinonim";
 
-export default function QuizComp({ jumlahSoal = 3 }) {
+export default function QuizComp({ jumlahSoal = 3, tipe, setShowSelector }) {
   const [quizData, setQuizData] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState([]);
@@ -61,8 +61,15 @@ export default function QuizComp({ jumlahSoal = 3 }) {
   };
 
   const resetQuiz = async () => {
-    setQuizData(SoalSinonim(jumlahSoal).slice(0, jumlahSoal));
+    setLoading(true);
+    if (tipe === "sinonim") {
+      setQuizData(SoalSinonim(jumlahSoal).slice(0, jumlahSoal));
+    }
+    setScore(0);
     setCurrentQuestion(0);
+    setIsSubmitted(false);
+    setSelectedAnswers([]);
+    setLoading(false);
   };
 
   if (loading) {
@@ -139,9 +146,8 @@ export default function QuizComp({ jumlahSoal = 3 }) {
           <div className="text-xl font-medium">
             {quizData[currentQuestion].question}
           </div>
-
           <RadioGroup
-            value={selectedAnswers[currentQuestion]}
+            value={selectedAnswers[currentQuestion] ?? ""}
             onValueChange={handleAnswerSelect}
             className="space-y-3"
           >
@@ -169,7 +175,6 @@ export default function QuizComp({ jumlahSoal = 3 }) {
               </div>
             ))}
           </RadioGroup>
-
           <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
             <div
               className="h-full bg-primary transition-all"
