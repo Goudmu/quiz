@@ -44,7 +44,7 @@ export default function PopUpQuiz({ onSubmit }) {
   };
 
   return (
-    <div className=" border-2 border-gray-300 rounded-lg p-4 shadow-md bg-white w-full max-w-md mx-auto mt-10">
+    <div className=" border-2 border-gray-300 rounded-lg p-2 lg:p-4 shadow-md bg-white w-full max-w-md mx-auto mt-10">
       <h2>Quiz Setup</h2>
       <h5>Enter the number of questions you want in your quiz.</h5>
       <div className="grid gap-4 py-4">

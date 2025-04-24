@@ -27,7 +27,7 @@ export default function QuizSelector() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
+    <main className="flex min-h-screen flex-col items-center justify-center p-2 lg:p-24">
       {showSelector && <PopUpQuiz onSubmit={handleQuestionCountSubmit} />}
       {questionCount !== null && !isStarted && !showSelector && (
         <Card className="w-full max-w-md">
