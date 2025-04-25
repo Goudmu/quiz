@@ -13,8 +13,9 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { ChevronLeft, ChevronRight, CheckCircle } from "lucide-react";
 import { SoalSinonim } from "@/lib/Soal/Sinonim/SoalSinonim";
+import { SoalAntonim } from "@/lib/Soal/Antonim/SoalAntonim";
 
-export default function QuizComp({ jumlahSoal = 3, tipe, setShowSelector }) {
+export default function QuizComp({ jumlahSoal = 3, tipeSoal }) {
   const [quizData, setQuizData] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState([]);
@@ -62,8 +63,10 @@ export default function QuizComp({ jumlahSoal = 3, tipe, setShowSelector }) {
 
   const resetQuiz = async () => {
     setLoading(true);
-    if (tipe === "sinonim") {
+    if (tipeSoal === "sinonim") {
       setQuizData(SoalSinonim(jumlahSoal).slice(0, jumlahSoal));
+    } else if (tipeSoal === "antonim") {
+      setQuizData(SoalAntonim(jumlahSoal).slice(0, jumlahSoal));
     }
     setScore(0);
     setCurrentQuestion(0);
@@ -185,13 +188,13 @@ export default function QuizComp({ jumlahSoal = 3, tipe, setShowSelector }) {
           </div>
         </div>
       </CardContent>
-      <CardFooter className="flex justify-between">
+      <CardFooter className="flex justify-between flex-col gap-4 md:flex-row md:items-center">
         <div className="flex gap-2">
           <Button
             onClick={handlePrevious}
             disabled={currentQuestion === 0}
             variant="outline"
-            className={"cursor-pointer"}
+            className={"cursor-pointer w-28"}
           >
             <ChevronLeft className="h-4 w-4 mr-1" /> Previous
           </Button>
@@ -200,7 +203,7 @@ export default function QuizComp({ jumlahSoal = 3, tipe, setShowSelector }) {
             <Button
               onClick={handleNext}
               disabled={!selectedAnswers[currentQuestion]}
-              className={"cursor-pointer"}
+              className={"cursor-pointer w-28"}
             >
               Next <ChevronRight className="h-4 w-4 ml-1" />
             </Button>
@@ -208,14 +211,13 @@ export default function QuizComp({ jumlahSoal = 3, tipe, setShowSelector }) {
             <Button
               onClick={handleSubmit}
               disabled={selectedAnswers.some((answer) => answer === "")}
-              className={"cursor-pointer"}
+              className={"cursor-pointer w-28"}
             >
               Submit Quiz
             </Button>
           )}
         </div>
-
-        <div className="text-sm text-muted-foreground">
+        <div className="text-sm text-muted-foreground ">
           {selectedAnswers.filter(Boolean).length} of {quizData.length} answered
         </div>
       </CardFooter>

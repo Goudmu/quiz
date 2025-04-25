@@ -12,7 +12,7 @@ import {
 import PopUpQuiz from "./PopUp";
 import QuizComp from "./QuizComp";
 
-export default function QuizSelector() {
+export default function QuizSelector({ tipeSoal }) {
   const [questionCount, setQuestionCount] = useState(null);
   const [showSelector, setShowSelector] = useState(true);
   const [isStarted, setIsStarted] = useState(false);
@@ -61,10 +61,12 @@ export default function QuizSelector() {
       )}
       {isStarted && (
         <div className="container mx-auto py-12 px-4">
-          <h1 className="text-3xl font-bold text-center mb-8">Sinonim Tes</h1>
+          <h1 className="text-3xl font-bold text-center mb-8">
+            {tipeSoal} Tes
+          </h1>
           <QuizComp
             jumlahSoal={questionCount}
-            tipe={"sinonim"}
+            tipeSoal={tipeSoal}
             setShowSelector={setShowSelector}
           />
         </div>
