@@ -13,7 +13,8 @@ const menuItems = [
   {
     id: 1,
     title: "Sinonim",
-    description: "Juicy beef patty with lettuce, tomato, and our special sauce",
+    description:
+      "Temukan kata-kata dengan makna serupa untuk meningkatkan kosakata Anda.",
     category: "Tes Intelegensi Umum",
     url: "/TIU/sinonim",
     isActive: true,
@@ -21,7 +22,8 @@ const menuItems = [
   {
     id: 2,
     title: "Antonim",
-    description: "Fresh mozzarella, tomatoes, and basil on our homemade dough",
+    description:
+      "Temukan kata-kata dengan makna berlawanan untuk mengasah keterampilan Anda.",
     category: "Tes Intelegensi Umum",
     url: "/TIU/antonim",
     isActive: true,
@@ -29,10 +31,18 @@ const menuItems = [
   {
     id: 3,
     title: "Akronim",
-    description: "Fresh mozzarella, tomatoes, and basil on our homemade dough",
+    description: "Pelajari singkatan umum dan bentuk lengkapnya.",
     category: "Tes Intelegensi Umum",
     url: "/TIU/akronim",
     isActive: false,
+  },
+  {
+    id: 4,
+    title: "Pancasila",
+    description: "Perdalam pemahaman Anda tentang filosofi dasar Indonesia.",
+    category: "Tes Wawasan Kebangsaan",
+    url: "/TWK/pancasila",
+    isActive: true,
   },
 ];
 

@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label";
 import { ChevronLeft, ChevronRight, CheckCircle } from "lucide-react";
 import { SoalSinonim } from "@/lib/Soal/Sinonim/SoalSinonim";
 import { SoalAntonim } from "@/lib/Soal/Antonim/SoalAntonim";
+import { SoalPancasila } from "@/lib/Soal/Pancasila/soalPancasila";
 
 export default function QuizComp({ jumlahSoal = 3, tipeSoal }) {
   const [quizData, setQuizData] = useState([]);
@@ -67,6 +68,8 @@ export default function QuizComp({ jumlahSoal = 3, tipeSoal }) {
       setQuizData(SoalSinonim(jumlahSoal).slice(0, jumlahSoal));
     } else if (tipeSoal === "antonim") {
       setQuizData(SoalAntonim(jumlahSoal).slice(0, jumlahSoal));
+    } else if (tipeSoal === "pancasila") {
+      setQuizData(SoalPancasila(jumlahSoal).slice(0, jumlahSoal));
     }
     setScore(0);
     setCurrentQuestion(0);
