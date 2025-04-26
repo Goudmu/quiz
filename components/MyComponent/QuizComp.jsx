@@ -15,6 +15,9 @@ import { ChevronLeft, ChevronRight, CheckCircle } from "lucide-react";
 import { SoalSinonim } from "@/lib/Soal/Sinonim/SoalSinonim";
 import { SoalAntonim } from "@/lib/Soal/Antonim/SoalAntonim";
 import { SoalPancasila } from "@/lib/Soal/Pancasila/soalPancasila";
+import { SoalVerbBahasaInggris } from "@/lib/Soal/verbBahasaInggris/VerbBahasaInggris";
+import { SoalVerbBahasaInggris2 } from "@/lib/Soal/verbBahasaInggris/VerbBahasaInggris2";
+import { SoalEnglishVocabularyinUseChapter1Part1 } from "@/lib/Soal/EnglishVocabularyinUse/soal1";
 
 export default function QuizComp({ jumlahSoal = 3, tipeSoal }) {
   const [quizData, setQuizData] = useState([]);
@@ -70,6 +73,14 @@ export default function QuizComp({ jumlahSoal = 3, tipeSoal }) {
       setQuizData(SoalAntonim(jumlahSoal).slice(0, jumlahSoal));
     } else if (tipeSoal === "pancasila") {
       setQuizData(SoalPancasila(jumlahSoal).slice(0, jumlahSoal));
+    } else if (tipeSoal === "bahasainggrisverb") {
+      setQuizData(SoalVerbBahasaInggris(jumlahSoal).slice(0, jumlahSoal));
+    } else if (tipeSoal === "bahasainggrisverb2") {
+      setQuizData(SoalVerbBahasaInggris2(jumlahSoal).slice(0, jumlahSoal));
+    } else if (tipeSoal === "EnglishVocabularyinuse1.1") {
+      setQuizData(
+        SoalEnglishVocabularyinUseChapter1Part1(jumlahSoal).slice(0, jumlahSoal)
+      );
     }
     setScore(0);
     setCurrentQuestion(0);

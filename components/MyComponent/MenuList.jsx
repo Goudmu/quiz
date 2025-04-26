@@ -1,4 +1,3 @@
-import Image from "next/image";
 import {
   Card,
   CardContent,
@@ -42,6 +41,30 @@ const menuItems = [
     description: "Perdalam pemahaman Anda tentang filosofi dasar Indonesia.",
     category: "Tes Wawasan Kebangsaan",
     url: "/TWK/pancasila",
+    isActive: true,
+  },
+  {
+    id: 5,
+    title: "Bahasa Inggris Verb Part 1",
+    description: "Perdalam pemahaman Anda tentang verb dalam bahasa Inggris.",
+    category: "Bahasa Inggris",
+    url: "/bahasainggris/verb",
+    isActive: true,
+  },
+  {
+    id: 6,
+    title: "Bahasa Inggris Verb Part 2",
+    description: "Perdalam pemahaman Anda tentang verb dalam bahasa Inggris.",
+    category: "Bahasa Inggris",
+    url: "/bahasainggris/verb2",
+    isActive: true,
+  },
+  {
+    id: 7,
+    title: "Bahasa Inggris Vocabulary",
+    description: "Perluas kosakata bahasa Inggris Anda.",
+    category: "Bahasa Inggris",
+    url: "/bahasainggris/EnglishVocabularyinUse/part1",
     isActive: true,
   },
 ];
