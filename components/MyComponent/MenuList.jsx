@@ -67,6 +67,14 @@ const menuItems = [
     url: "/bahasainggris/EnglishVocabularyinUse/part1",
     isActive: true,
   },
+  {
+    id: 8,
+    title: "Bahasa Inggris Noun",
+    description: "Perluas kosakata bahasa Inggris Anda.",
+    category: "Bahasa Inggris",
+    url: "/bahasainggris/noun",
+    isActive: true,
+  },
 ];
 
 export function MenuList() {

@@ -18,6 +18,7 @@ import { SoalPancasila } from "@/lib/Soal/Pancasila/soalPancasila";
 import { SoalVerbBahasaInggris } from "@/lib/Soal/verbBahasaInggris/VerbBahasaInggris";
 import { SoalVerbBahasaInggris2 } from "@/lib/Soal/verbBahasaInggris/VerbBahasaInggris2";
 import { SoalEnglishVocabularyinUseChapter1Part1 } from "@/lib/Soal/EnglishVocabularyinUse/soal1";
+import { SoalNounBahasaInggris } from "@/lib/Soal/nounBahasaInggris/NounBahasaInggris";
 
 export default function QuizComp({ jumlahSoal = 3, tipeSoal }) {
   const [quizData, setQuizData] = useState([]);
@@ -81,6 +82,8 @@ export default function QuizComp({ jumlahSoal = 3, tipeSoal }) {
       setQuizData(
         SoalEnglishVocabularyinUseChapter1Part1(jumlahSoal).slice(0, jumlahSoal)
       );
+    } else if (tipeSoal === "bahasainggris/noun") {
+      setQuizData(SoalNounBahasaInggris(jumlahSoal).slice(0, jumlahSoal));
     }
     setScore(0);
     setCurrentQuestion(0);
