@@ -3,6 +3,7 @@
 import { useState } from "react";
 import PopUpPassageQuiz from "./PopUpPassage";
 import QuizCompPassage from "./QuizCompPassage";
+import { getTitleQuestions } from "@/lib/utils";
 
 export default function QuizSelectorPassage({ tipeSoal }) {
   const [questionCount, setQuestionCount] = useState(null);
@@ -25,7 +26,7 @@ export default function QuizSelectorPassage({ tipeSoal }) {
       {isStarted && (
         <div className="container mx-auto py-12 px-4">
           <h1 className="text-3xl font-bold text-center mb-8">
-            {tipeSoal} Tes
+            {getTitleQuestions(tipeSoal)}
           </h1>
           <QuizCompPassage
             jumlahSoal={questionCount}
