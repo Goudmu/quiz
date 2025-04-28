@@ -28,38 +28,43 @@ export default function QuizSelector({ tipeSoal }) {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-2 lg:p-24">
-      {showSelector && <PopUpQuiz onSubmit={handleQuestionCountSubmit} />}
-      {questionCount !== null && !isStarted && !showSelector && (
-        <Card className="w-full max-w-md">
-          <CardHeader>
-            <CardTitle>Quiz Ready!</CardTitle>
-            <CardDescription>
-              Your quiz has been set up with {questionCount} questions.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p className="mb-4">
-              You can now start your quiz or modify the settings.
-            </p>
-            <div className="flex justify-between">
-              <Button
-                className="cursor-pointer"
-                variant="outline"
-                onClick={() => setShowSelector(true)}
-              >
-                Change Settings
-              </Button>
-              <Button
-                className="cursor-pointer"
-                onClick={() => handleStartQuiz()}
-              >
-                Start Quiz
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+      {showSelector && tipeSoal != "bahasainggris/passage" && (
+        <PopUpQuiz onSubmit={handleQuestionCountSubmit} />
       )}
-      {isStarted && (
+      {questionCount !== null &&
+        !isStarted &&
+        !showSelector &&
+        tipeSoal != "bahasainggris/passage" && (
+          <Card className="w-full max-w-md">
+            <CardHeader>
+              <CardTitle>Quiz Ready!</CardTitle>
+              <CardDescription>
+                Your quiz has been set up with {questionCount} questions.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="mb-4">
+                You can now start your quiz or modify the settings.
+              </p>
+              <div className="flex justify-between">
+                <Button
+                  className="cursor-pointer"
+                  variant="outline"
+                  onClick={() => setShowSelector(true)}
+                >
+                  Change Settings
+                </Button>
+                <Button
+                  className="cursor-pointer"
+                  onClick={() => handleStartQuiz()}
+                >
+                  Start Quiz
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+      {(isStarted || tipeSoal == "bahasainggris/passage") && (
         <div className="container mx-auto py-12 px-4">
           <h1 className="text-3xl font-bold text-center mb-8">
             {tipeSoal} Tes

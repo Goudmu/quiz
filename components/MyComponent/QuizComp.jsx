@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { isValidElement, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -19,6 +19,9 @@ import { SoalVerbBahasaInggris } from "@/lib/Soal/verbBahasaInggris/VerbBahasaIn
 import { SoalVerbBahasaInggris2 } from "@/lib/Soal/verbBahasaInggris/VerbBahasaInggris2";
 import { SoalEnglishVocabularyinUseChapter1Part1 } from "@/lib/Soal/EnglishVocabularyinUse/soal1";
 import { SoalNounBahasaInggris } from "@/lib/Soal/nounBahasaInggris/NounBahasaInggris";
+import { SoalAdjBahasaInggris } from "@/lib/Soal/adjBahasaInggris/AdjBahasaInggris";
+import { soalPassage } from "@/lib/Soal/passageBahasaInggris/soalPassage";
+import { getShuffledIndexes } from "@/lib/utils";
 
 export default function QuizComp({ jumlahSoal = 3, tipeSoal }) {
   const [quizData, setQuizData] = useState([]);
@@ -27,6 +30,7 @@ export default function QuizComp({ jumlahSoal = 3, tipeSoal }) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [score, setScore] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [story, setStory] = useState({});
 
   useEffect(() => {
     if (quizData.length === 0) {
@@ -84,6 +88,15 @@ export default function QuizComp({ jumlahSoal = 3, tipeSoal }) {
       );
     } else if (tipeSoal === "bahasainggris/noun") {
       setQuizData(SoalNounBahasaInggris(jumlahSoal).slice(0, jumlahSoal));
+    } else if (tipeSoal === "bahasainggris/adj") {
+      setQuizData(SoalAdjBahasaInggris(jumlahSoal).slice(0, jumlahSoal));
+    } else if (tipeSoal === "bahasainggris/passage") {
+      const nomorPassage = 1;
+      setQuizData(soalPassage(nomorPassage).ListSoalFinal);
+      setStory({
+        story: soalPassage(nomorPassage).story,
+        title: soalPassage(nomorPassage).title,
+      });
     }
     setScore(0);
     setCurrentQuestion(0);
@@ -115,7 +128,6 @@ export default function QuizComp({ jumlahSoal = 3, tipeSoal }) {
               Your score: {score} out of {quizData.length}
             </h2>
           </div>
-
           <div className="space-y-4 mt-8">
             <h3 className="font-medium text-lg">Question Summary:</h3>
             {quizData.map((question, index) => (
@@ -155,89 +167,104 @@ export default function QuizComp({ jumlahSoal = 3, tipeSoal }) {
   }
 
   return (
-    <Card className="w-full max-w-3xl mx-auto">
-      <CardHeader>
-        <CardTitle>
-          Question {currentQuestion + 1} of {quizData.length}
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-6">
-          <div className="text-xl font-medium">
-            {quizData[currentQuestion].question}
-          </div>
-          <RadioGroup
-            value={selectedAnswers[currentQuestion] ?? ""}
-            onValueChange={handleAnswerSelect}
-            className="space-y-3"
-          >
-            {quizData[currentQuestion].options.map((option, index) => (
-              <div
-                key={index}
-                className={`flex items-center space-x-2 rounded-lg border p-4 transition-colors hover:bg-muted cursor-pointer ${
-                  selectedAnswers[currentQuestion] === option
-                    ? "bg-muted border-primary"
-                    : ""
-                }`}
-                onClick={() => handleAnswerSelect(option)}
-              >
-                <RadioGroupItem
-                  value={option}
-                  id={`option-${index}`}
-                  className="sr-only"
-                />
-                <Label
-                  htmlFor={`option-${index}`}
-                  className="flex flex-1 cursor-pointer items-center justify-between font-normal"
+    <div className="flex min-h-screen flex-col items-center justify-center p-2">
+      {tipeSoal === "bahasainggris/passage" && (
+        <div className="w-full max-w-3xl mx-auto mb-4 border rounded-md shadow-xs p-4 bg-white">
+          <h1 className=" text-center font-bold mb-4 lg:mb-12">
+            {story.title}
+          </h1>
+          {story.story.map((paragraph, index) => (
+            <p key={index} className="mb-4 text-justify">
+              {paragraph}
+            </p>
+          ))}
+        </div>
+      )}
+      <Card className="w-full max-w-3xl mx-auto">
+        <CardHeader>
+          <CardTitle>
+            Question {currentQuestion + 1} of {quizData.length}
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-6">
+            <div className="text-xl font-medium">
+              {quizData[currentQuestion].question}
+            </div>
+            <RadioGroup
+              value={selectedAnswers[currentQuestion] ?? ""}
+              onValueChange={handleAnswerSelect}
+              className="space-y-3"
+            >
+              {quizData[currentQuestion].options.map((option, index) => (
+                <div
+                  key={index}
+                  className={`flex items-center space-x-2 rounded-lg border p-4 transition-colors hover:bg-muted cursor-pointer ${
+                    selectedAnswers[currentQuestion] === option
+                      ? "bg-muted border-primary"
+                      : ""
+                  }`}
+                  onClick={() => handleAnswerSelect(option)}
                 >
-                  {option}
-                </Label>
-              </div>
-            ))}
-          </RadioGroup>
-          <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
-            <div
-              className="h-full bg-primary transition-all"
-              style={{
-                width: `${((currentQuestion + 1) / quizData.length) * 100}%`,
-              }}
-            />
+                  <RadioGroupItem
+                    value={option}
+                    id={`option-${index}`}
+                    className="sr-only"
+                  />
+                  <Label
+                    htmlFor={`option-${index}`}
+                    className="flex flex-1 cursor-pointer items-center justify-between font-normal"
+                  >
+                    {option}
+                  </Label>
+                </div>
+              ))}
+            </RadioGroup>
+            <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
+              <div
+                className="h-full bg-primary transition-all"
+                style={{
+                  width: `${((currentQuestion + 1) / quizData.length) * 100}%`,
+                }}
+              />
+            </div>
           </div>
-        </div>
-      </CardContent>
-      <CardFooter className="flex justify-between flex-col gap-4 md:flex-row md:items-center">
-        <div className="flex gap-2">
-          <Button
-            onClick={handlePrevious}
-            disabled={currentQuestion === 0}
-            variant="outline"
-            className={"cursor-pointer w-28"}
-          >
-            <ChevronLeft className="h-4 w-4 mr-1" /> Previous
-          </Button>
+        </CardContent>
+        <CardFooter className="flex justify-between flex-col gap-4 md:flex-row md:items-center">
+          <div className="flex gap-2">
+            <Button
+              onClick={handlePrevious}
+              disabled={currentQuestion === 0}
+              variant="outline"
+              className={"cursor-pointer w-28"}
+            >
+              <ChevronLeft className="h-4 w-4 mr-1" /> Previous
+            </Button>
 
-          {currentQuestion < quizData.length - 1 ? (
-            <Button
-              onClick={handleNext}
-              disabled={!selectedAnswers[currentQuestion]}
-              className={"cursor-pointer w-28"}
-            >
-              Next <ChevronRight className="h-4 w-4 ml-1" />
-            </Button>
-          ) : (
-            <Button
-              onClick={handleSubmit}
-              disabled={selectedAnswers.some((answer) => answer === "")}
-              className={"cursor-pointer w-28"}
-            >
-              Submit Quiz
-            </Button>
-          )}
-        </div>
-        <div className="text-sm text-muted-foreground ">
-          {selectedAnswers.filter(Boolean).length} of {quizData.length} answered
-        </div>
-      </CardFooter>
-    </Card>
+            {currentQuestion < quizData.length - 1 ? (
+              <Button
+                onClick={handleNext}
+                disabled={!selectedAnswers[currentQuestion]}
+                className={"cursor-pointer w-28"}
+              >
+                Next <ChevronRight className="h-4 w-4 ml-1" />
+              </Button>
+            ) : (
+              <Button
+                onClick={handleSubmit}
+                disabled={selectedAnswers.some((answer) => answer === "")}
+                className={"cursor-pointer w-28"}
+              >
+                Submit Quiz
+              </Button>
+            )}
+          </div>
+          <div className="text-sm text-muted-foreground ">
+            {selectedAnswers.filter(Boolean).length} of {quizData.length}{" "}
+            answered
+          </div>
+        </CardFooter>
+      </Card>
+    </div>
   );
 }
